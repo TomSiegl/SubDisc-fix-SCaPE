@@ -1817,6 +1817,10 @@ public class QualityMeasure
 				}
 			}
 		}
+
+		// Add ranking loss for the last score value, which is not included in the loop.
+		aTotalRankingLoss += aPositiveTiesCount * aNegativeTiesCount;
+
 		return (float) ((double) aTotalRankingLoss / (double) (theNrPositives * 2));
 	}
 
