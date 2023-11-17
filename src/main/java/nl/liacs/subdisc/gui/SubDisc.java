@@ -69,6 +69,7 @@ public class SubDisc
 		// Skipping libs check. Using Maven for dependency management.
 		// checkLibs();
 
+		/*
 		try 
 		{
 			String aJarPath = SubDisc.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
@@ -86,6 +87,7 @@ public class SubDisc
 		{
 			e.printStackTrace();
 		}
+		 */
 
 		if (!GraphicsEnvironment.isHeadless() && (SplashScreen.getSplashScreen() != null))
 		{
