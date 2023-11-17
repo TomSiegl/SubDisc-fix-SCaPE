@@ -1748,7 +1748,7 @@ public class QualityMeasure
 		int aNrNegatives = theCoverage-theNrPositives;
 		int aPositiveLoopCount = 0;
 		int aNegativeLoopCount = 0;
-		float aTotalRankingLoss = 0.0f;
+		int aTotalRankingLoss = 0;
 
 		// Statistics for tie breaking, maintaining the results that may still fall under ties in the numeric target
 		int aPositiveTiesCount = 0;
@@ -1773,7 +1773,7 @@ public class QualityMeasure
 			float aCurrentFloatValue = itsNumericTarget.getFloat(aCurrentIndex); 
 			if (aCurrentFloatValue < aPreviousFloatValue)
 			{
-				aTotalRankingLoss += aPositiveTiesCount * aNegativeTiesCount * 0.5f;
+				aTotalRankingLoss += aPositiveTiesCount * aNegativeTiesCount;
 				aPreviousFloatValue = aCurrentFloatValue;
 				aPositiveLoopCount += aPositiveTiesCount;
 				aNegativeLoopCount += aNegativeTiesCount;
@@ -1791,7 +1791,7 @@ public class QualityMeasure
 				if (aNegativeLoopCount == aNrNegatives)
 				{
 					aContinueLoop = false;
-					aTotalRankingLoss += (theNrPositives-aPositiveLoopCount)*aNrNegatives;
+					aTotalRankingLoss += (theNrPositives-aPositiveLoopCount) * aNrNegatives * 2;
 				}
 			}
 
@@ -1809,7 +1809,7 @@ public class QualityMeasure
 				if (itsBinaryTarget.getBinary(aCurrentIndex))
 				{
 					aPositiveTiesCount++;
-					aTotalRankingLoss += aNegativeLoopCount;
+					aTotalRankingLoss += aNegativeLoopCount * 2;
 				}
 				else
 				{
@@ -1817,7 +1817,7 @@ public class QualityMeasure
 				}
 			}
 		}
-		return aTotalRankingLoss / (float) theNrPositives;
+		return (float) ((double) aTotalRankingLoss / (double) (theNrPositives * 2));
 	}
 
 	//  N 16B Objects, 2N + N*log(N) operations instead of
